@@ -4,7 +4,7 @@ import urllib.error
 import json
 import config
 
-user_agent = "Pandora-bot 1.0.0"
+user_agent = "Pandora-bot 1.0.1"
 
 def gen_url(tags):
     tags = tags.replace(" ","+")
@@ -28,10 +28,16 @@ def get_image_url(json_file):
     if "success" not in json_file:
         if "file_url" in json_file:
             if "large_file_url" in json_file and ".zip" in json_file["file_url"] and ".zip" not in json_file["large_file_url"]:
-                url = "Id:" + str(json_file["id"]) + "\n" + config.base_donmai_url + json_file["large_file_url"]
+                if "donmai" in json_file["large_file_url"]:
+                    url = "Id:" + str(json_file["id"]) + "\n" + json_file["large_file_url"]
+                else:
+                    url = "Id:" + str(json_file["id"]) + "\n" + config.base_donmai_url + json_file["large_file_url"]
                 return url
             elif ".zip" not in json_file["file_url"]:
-                url = "Id:" + str(json_file["id"]) + "\n" + config.base_donmai_url + json_file["file_url"]
+                if "donmai" in json_file["file_url"]:
+                    url = "Id:" + str(json_file["id"]) + "\n" + json_file["file_url"]
+                else:
+                    url = "Id:" + str(json_file["id"]) + "\n" + config.base_donmai_url + json_file["file_url"]
                 return url
             else:
                 return None
