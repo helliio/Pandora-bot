@@ -4,7 +4,7 @@ import urllib.error
 import json
 import config
 
-user_agent = "Pandora-bot 1.0.1"
+user_agent = "Pandora-bot 1.0.2"
 
 def gen_url(tags):
     tags = tags.replace(" ","+")

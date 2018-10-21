@@ -1,6 +1,7 @@
 import discord
 import config
 import image_module
+import time
 
 client = discord.Client()
 
@@ -32,4 +33,15 @@ async def on_ready():
     for server in client.servers:
         print(server.name + " (" + server.id + ")")
 
-client.run(config.token)
+while True:
+    try:
+        client.loop.run_until_complete(client.start(config.token))
+    except KeyboardInterrupt:
+        client.loop.run_until_complete(client.logout())
+        client.loop.close
+        print("Disconnecting...")
+        break
+    except BaseException as e:
+        print(e)
+        print("Attempting to reconnect...")
+        time.sleep(5)
