@@ -13,6 +13,17 @@ async def on_message(message):
     if message.content.startswith("!hello_world"):
         msg = "H..Hello world, my name is Pandora."
         await client.send_message(message.channel, msg)
+        
+    if message.content.startswith("!help"):
+        msg = ("The following commands can be used:\n\n"
+               "!tags [tag] [tag]:\n"
+               "The !tags command finds a random image from "
+               "donmai based on the [tag] entered. "
+               "It can either be one tag, or two tags separated by a space. "
+               "If a tag contains a space, for example cat ears, then "
+               "you must use an underscore.\n"
+               "Example: !tags cat_ears car\n\n")
+        await client.send_message(message.channel, msg)
 
     if message.content.startswith("!tags"):
         tags = message.content.replace("!tags ", "")

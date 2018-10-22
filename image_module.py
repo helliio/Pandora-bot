@@ -3,8 +3,9 @@ import urllib.request
 import urllib.error
 import json
 import config
+import time
 
-user_agent = "Pandora-bot 1.0.2"
+user_agent = "Pandora-bot 1.0.3"
 
 def gen_url(tags):
     tags = tags.replace(" ","+")
@@ -47,10 +48,13 @@ def get_image_url(json_file):
         return None
 
 async def get_random_img(tags):
-    json = get_json(gen_url(tags))
-    if json is None:
-        return "Sorry master... I could not find the image"
-    url = get_image_url(json)
-    if url is None:
-        return "Sorry master... I could not load the image"
-    return url
+    for _ in range(5):
+        json = get_json(gen_url(tags))
+        if json is None:
+            return "Sorry master... I could not find the image"
+        url = get_image_url(json)
+        if url is None:
+            time.sleep(3)
+            continue
+        return url
+    return "Sorry master... I could not load the image"
